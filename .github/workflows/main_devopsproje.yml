@@ -1,0 +1,56 @@
+name: Build and deploy HTML app to Azure Web App - devopsproje
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  # GitHub'ın Node.js 20 uyarısını susturmak ve geleceğe uyumlu olmak için:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read 
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Proje sadece statik dosya olduğu için npm install adımları kaldırıldı.
+      # Dosyaları doğrudan Azure'a gönderilmek üzere paketliyoruz:
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-app
+          path: .
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write 
+      contents: read 
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: web-app
+      
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FCB27F6DD36545DCA983CF1168341943 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8EDB0F28AF8641E89B612AC2CD582284 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_61F18090331E49809607F5D6EAB7A288 }}
+
+      - name: 'Deploy to Azure Web App'
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'devopsproje'
+          slot-name: 'Production'
+          package: .
