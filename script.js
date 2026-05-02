@@ -183,20 +183,36 @@
     // Stop any previous demo progress
     stopDemoProgress();
 
-    // Update audio source
-    dom.audio.crossOrigin = 'anonymous';
+    // Remove crossOrigin to avoid CORS preflight issues with Blob Storage
+    dom.audio.removeAttribute('crossorigin');
     dom.audio.src = song.audioUrl;
     dom.audio.load();
 
-    dom.audio.play().then(() => {
-      // Real audio loaded successfully – use native events
+    // Listen for successful load to detect real audio
+    const onCanPlay = () => {
       state.useRealAudio = true;
       stopDemoProgress();
-    }).catch(() => {
+      dom.audio.removeEventListener('canplaythrough', onCanPlay);
+      dom.audio.removeEventListener('error', onError);
+    };
+
+    const onError = () => {
       // Audio failed (placeholder) – fall back to demo progress
       console.warn('Audio kaynağı yüklenemedi (placeholder). Demo modunda devam ediliyor.');
       state.useRealAudio = false;
       startDemoProgress(song.duration);
+      dom.audio.removeEventListener('canplaythrough', onCanPlay);
+      dom.audio.removeEventListener('error', onError);
+    };
+
+    dom.audio.addEventListener('canplaythrough', onCanPlay, { once: true });
+    dom.audio.addEventListener('error', onError, { once: true });
+
+    dom.audio.play().catch(() => {
+      // Autoplay might be blocked – user interaction will resume
+      if (!state.useRealAudio) {
+        startDemoProgress(song.duration);
+      }
     });
 
     // Update player UI
