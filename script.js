@@ -178,12 +178,25 @@
 
     state.currentIndex = filteredIndex;
     state.isPlaying = true;
+    state.useRealAudio = false;
+
+    // Stop any previous demo progress
+    stopDemoProgress();
 
     // Update audio source
+    dom.audio.crossOrigin = 'anonymous';
     dom.audio.src = song.audioUrl;
-    dom.audio.play().catch(() => {
-      // Audio may fail if placeholder – that's OK for demo
+    dom.audio.load();
+
+    dom.audio.play().then(() => {
+      // Real audio loaded successfully – use native events
+      state.useRealAudio = true;
+      stopDemoProgress();
+    }).catch(() => {
+      // Audio failed (placeholder) – fall back to demo progress
       console.warn('Audio kaynağı yüklenemedi (placeholder). Demo modunda devam ediliyor.');
+      state.useRealAudio = false;
+      startDemoProgress(song.duration);
     });
 
     // Update player UI
@@ -194,9 +207,6 @@
 
     updatePlayButton(true);
     highlightCurrentCard();
-
-    // Simulate progress for demo if audio can't play
-    startDemoProgress(song.duration);
   }
 
   // -------- Demo Progress (for placeholder audio) --------
@@ -236,9 +246,28 @@
     updatePlayButton(state.isPlaying);
 
     if (state.isPlaying) {
-      dom.audio.play().catch(() => {});
+      dom.audio.play().catch(() => { });
     } else {
       dom.audio.pause();
+    }
+
+    // Resume/pause demo progress for placeholder tracks
+    if (!state.useRealAudio && state.isPlaying && demoInterval === null) {
+      const song = state.filteredSongs[state.currentIndex];
+      if (song) {
+        demoInterval = setInterval(() => {
+          if (!state.isPlaying) return;
+          demoTime += 0.5;
+          const pct = Math.min((demoTime / song.duration) * 100, 100);
+          dom.progressBar.style.width = `${pct}%`;
+          dom.timeCurrent.textContent = formatTime(demoTime);
+          if (demoTime >= song.duration) {
+            clearInterval(demoInterval);
+            demoInterval = null;
+            handleTrackEnd();
+          }
+        }, 500);
+      }
     }
 
     highlightCurrentCard();
@@ -345,13 +374,15 @@
     if (state.currentIndex === -1) return;
 
     const song = state.filteredSongs[state.currentIndex];
-    demoTime = pct * song.duration;
-    dom.progressBar.style.width = `${pct * 100}%`;
-    dom.timeCurrent.textContent = formatTime(demoTime);
 
-    // Also seek real audio if loaded
-    if (dom.audio.duration) {
+    if (state.useRealAudio && dom.audio.duration) {
+      // Seek real audio
       dom.audio.currentTime = pct * dom.audio.duration;
+    } else {
+      // Seek demo progress
+      demoTime = pct * song.duration;
+      dom.progressBar.style.width = `${pct * 100}%`;
+      dom.timeCurrent.textContent = formatTime(demoTime);
     }
   }
 
@@ -454,6 +485,7 @@
 
     // Audio events (for real audio files)
     dom.audio.addEventListener('timeupdate', () => {
+      if (!state.useRealAudio) return;
       if (!dom.audio.duration || isNaN(dom.audio.duration)) return;
       const pct = (dom.audio.currentTime / dom.audio.duration) * 100;
       dom.progressBar.style.width = `${pct}%`;
@@ -462,8 +494,9 @@
     dom.audio.addEventListener('loadedmetadata', () => {
       if (dom.audio.duration && !isNaN(dom.audio.duration)) {
         dom.timeTotal.textContent = formatTime(dom.audio.duration);
-        // Kill demo progress if real audio is loaded
-        stopDemoProgress();
+        if (state.useRealAudio) {
+          stopDemoProgress();
+        }
       }
     });
     dom.audio.addEventListener('ended', handleTrackEnd);

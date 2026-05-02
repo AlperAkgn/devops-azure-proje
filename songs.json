@@ -1,13 +1,13 @@
 [
   {
     "id": 1,
-    "title": "Neon Hayaller",
-    "artist": "Elif Yıldız",
-    "album": "Gecenin Renkleri",
-    "genre": "Pop",
+    "title": "Disfruto",
+    "artist": "Carla Morrison",
+    "album": "Amor Supremo",
+    "genre": "Latin",
     "duration": 214,
     "coverUrl": "assets/covers/cover1.png",
-    "audioUrl": "placeholder.mp3"
+    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/Carla%20Morrison%20-%20Disfruto%20(letra)%20%5BjwP1HRmDVII%5D.mp3"
   },
   {
     "id": 2,
