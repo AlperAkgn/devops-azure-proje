@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "title": "Neon Hayaller",
+    "artist": "Elif Yıldız",
+    "album": "Gecenin Renkleri",
+    "genre": "Pop",
+    "duration": 214,
+    "coverUrl": "assets/covers/cover1.png",
+    "audioUrl": "placeholder.mp3"
+  },
+  {
+    "id": 2,
+    "title": "Dijital Dalga",
+    "artist": "DJ Kaan",
+    "album": "Frekans",
+    "genre": "Electronic",
+    "duration": 187,
+    "coverUrl": "assets/covers/cover2.png",
+    "audioUrl": "placeholder.mp3"
+  },
+  {
+    "id": 3,
+    "title": "Yağmurlu Gece",
+    "artist": "Lo-Fi Collective",
+    "album": "Gece Notları",
+    "genre": "Lo-Fi",
+    "duration": 243,
+    "coverUrl": "assets/covers/cover3.png",
+    "audioUrl": "placeholder.mp3"
+  },
+  {
+    "id": 4,
+    "title": "Zirve",
+    "artist": "Kaya Sesi",
+    "album": "Dağların Ötesi",
+    "genre": "Rock",
+    "duration": 276,
+    "coverUrl": "assets/covers/cover4.png",
+    "audioUrl": "placeholder.mp3"
+  },
+  {
+    "id": 5,
+    "title": "Altın Saat",
+    "artist": "Caz Trio",
+    "album": "Gece Kulübü",
+    "genre": "Jazz",
+    "duration": 312,
+    "coverUrl": "assets/covers/cover5.png",
+    "audioUrl": "placeholder.mp3"
+  },
+  {
+    "id": 6,
+    "title": "Orman Yolu",
+    "artist": "Akustik Rüzgar",
+    "album": "Doğanın Sesi",
+    "genre": "Folk",
+    "duration": 198,
+    "coverUrl": "assets/covers/cover6.png",
+    "audioUrl": "placeholder.mp3"
+  },
+  {
+    "id": 7,
+    "title": "Kadife Gece",
+    "artist": "Selin Demir",
+    "album": "Işıltı",
+    "genre": "R&B",
+    "duration": 229,
+    "coverUrl": "assets/covers/cover7.png",
+    "audioUrl": "placeholder.mp3"
+  },
+  {
+    "id": 8,
+    "title": "Yıldız Tozu",
+    "artist": "Aurora Ensemble",
+    "album": "Kozmik Yolculuk",
+    "genre": "Ambient",
+    "duration": 345,
+    "coverUrl": "assets/covers/cover8.png",
+    "audioUrl": "placeholder.mp3"
+  }
+]
