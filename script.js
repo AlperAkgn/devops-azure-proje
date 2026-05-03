@@ -392,18 +392,25 @@
     return Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
   }
 
+  function getReliableDuration(song) {
+    // audio.duration can be Infinity or NaN for WAV/large files
+    const d = dom.audio.duration;
+    return (d && isFinite(d) && !isNaN(d)) ? d : song.duration;
+  }
+
   function seekToPercent(pct) {
     if (state.currentIndex === -1) return;
     const song = state.filteredSongs[state.currentIndex];
+    const duration = getReliableDuration(song);
 
-    if (state.useRealAudio && dom.audio.duration) {
-      dom.audio.currentTime = pct * dom.audio.duration;
+    if (state.useRealAudio) {
+      dom.audio.currentTime = pct * duration;
     } else {
       demoTime = pct * song.duration;
     }
     dom.progressBar.style.width = `${pct * 100}%`;
     dom.timeCurrent.textContent = formatTime(
-      state.useRealAudio && dom.audio.duration ? pct * dom.audio.duration : demoTime
+      state.useRealAudio ? pct * duration : demoTime
     );
   }
 
@@ -563,15 +570,18 @@
 
     // Audio events (for real audio files)
     dom.audio.addEventListener('timeupdate', () => {
-      if (!state.useRealAudio) return;
-      if (!dom.audio.duration || isNaN(dom.audio.duration)) return;
-      const pct = (dom.audio.currentTime / dom.audio.duration) * 100;
+      if (!state.useRealAudio || isDraggingProgress) return;
+      const song = state.filteredSongs[state.currentIndex];
+      if (!song) return;
+      const duration = getReliableDuration(song);
+      const pct = (dom.audio.currentTime / duration) * 100;
       dom.progressBar.style.width = `${pct}%`;
       dom.timeCurrent.textContent = formatTime(dom.audio.currentTime);
     });
     dom.audio.addEventListener('loadedmetadata', () => {
-      if (dom.audio.duration && !isNaN(dom.audio.duration)) {
-        dom.timeTotal.textContent = formatTime(dom.audio.duration);
+      const d = dom.audio.duration;
+      if (d && isFinite(d) && !isNaN(d)) {
+        dom.timeTotal.textContent = formatTime(d);
         if (state.useRealAudio) {
           stopDemoProgress();
         }
