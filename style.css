@@ -774,8 +774,13 @@ ol {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.progress-bar-wrap:hover .progress-handle {
+.progress-bar-wrap:hover .progress-handle,
+.progress-bar-wrap.dragging .progress-handle {
   transform: translateY(-50%) scale(1);
+}
+
+.progress-bar-wrap.dragging {
+  height: 6px;
 }
 
 /* Volume */

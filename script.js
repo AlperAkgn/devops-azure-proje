@@ -383,35 +383,93 @@
     });
   }
 
-  // -------- Progress Bar Interaction --------
-  function handleProgressClick(e) {
-    const rect = dom.progressWrap.getBoundingClientRect();
-    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-    if (state.currentIndex === -1) return;
+  // -------- Progress Bar Interaction (drag + click) --------
+  let isDraggingProgress = false;
 
+  function getProgressPercent(e) {
+    const rect = dom.progressWrap.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    return Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+  }
+
+  function seekToPercent(pct) {
+    if (state.currentIndex === -1) return;
     const song = state.filteredSongs[state.currentIndex];
 
     if (state.useRealAudio && dom.audio.duration) {
-      // Seek real audio
       dom.audio.currentTime = pct * dom.audio.duration;
     } else {
-      // Seek demo progress
       demoTime = pct * song.duration;
-      dom.progressBar.style.width = `${pct * 100}%`;
-      dom.timeCurrent.textContent = formatTime(demoTime);
     }
+    dom.progressBar.style.width = `${pct * 100}%`;
+    dom.timeCurrent.textContent = formatTime(
+      state.useRealAudio && dom.audio.duration ? pct * dom.audio.duration : demoTime
+    );
+  }
+
+  function handleProgressDragStart(e) {
+    e.preventDefault();
+    isDraggingProgress = true;
+    // Show the handle while dragging
+    dom.progressWrap.classList.add('dragging');
+    seekToPercent(getProgressPercent(e));
+
+    const onMove = (ev) => {
+      if (!isDraggingProgress) return;
+      ev.preventDefault();
+      seekToPercent(getProgressPercent(ev));
+    };
+
+    const onEnd = () => {
+      isDraggingProgress = false;
+      dom.progressWrap.classList.remove('dragging');
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onEnd);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onEnd);
+    };
+
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onEnd);
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend', onEnd);
   }
 
   // -------- Volume --------
   let currentVolume = 0.7;
 
-  function handleVolumeClick(e) {
-    const rect = dom.volumeWrap.getBoundingClientRect();
-    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  function setVolumeFromPercent(pct) {
     currentVolume = pct;
     dom.audio.volume = pct;
     dom.volumeBar.style.width = `${pct * 100}%`;
     updateVolumeIcon();
+  }
+
+  function handleVolumeDragStart(e) {
+    e.preventDefault();
+    const getVolPct = (ev) => {
+      const rect = dom.volumeWrap.getBoundingClientRect();
+      const clientX = ev.touches ? ev.touches[0].clientX : ev.clientX;
+      return Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    };
+    setVolumeFromPercent(getVolPct(e));
+
+    const onMove = (ev) => {
+      ev.preventDefault();
+      setVolumeFromPercent(getVolPct(ev));
+    };
+
+    const onEnd = () => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onEnd);
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onEnd);
+    };
+
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onEnd);
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend', onEnd);
   }
 
   function toggleMute() {
@@ -472,9 +530,13 @@
     dom.btnLike.addEventListener('click', toggleLike);
     dom.btnVolume.addEventListener('click', toggleMute);
 
-    // Progress & volume bars
-    dom.progressWrap.addEventListener('click', handleProgressClick);
-    dom.volumeWrap.addEventListener('click', handleVolumeClick);
+    // Progress bar – click + drag support
+    dom.progressWrap.addEventListener('mousedown', handleProgressDragStart);
+    dom.progressWrap.addEventListener('touchstart', handleProgressDragStart, { passive: false });
+
+    // Volume bar – click + drag support
+    dom.volumeWrap.addEventListener('mousedown', handleVolumeDragStart);
+    dom.volumeWrap.addEventListener('touchstart', handleVolumeDragStart, { passive: false });
 
     // Genre chips
     dom.filterChips.addEventListener('click', (e) => {
