@@ -19,6 +19,7 @@
     likedSongs: new Set(),
     currentGenre: 'all',
     searchQuery: '',
+    realDuration: 0, // populated from audio.duration via loadedmetadata/durationchange
   };
 
   // -------- DOM References --------
@@ -179,6 +180,7 @@
     state.currentIndex = filteredIndex;
     state.isPlaying = true;
     state.useRealAudio = false;
+    state.realDuration = 0; // reset – will be set by loadedmetadata/durationchange
 
     // Stop any previous demo progress
     stopDemoProgress();
@@ -219,6 +221,7 @@
     dom.playerCover.src = song.coverUrl;
     dom.playerTitle.textContent = song.title;
     dom.playerArtist.textContent = song.artist;
+    // Show JSON duration as placeholder until real duration arrives
     dom.timeTotal.textContent = formatTime(song.duration);
 
     updatePlayButton(true);
@@ -302,8 +305,9 @@
 
   function playPrev() {
     if (state.filteredSongs.length === 0) return;
-    // If more than 3 seconds in, restart
-    if (demoTime > 3) {
+    // If more than 3 seconds in, restart current track
+    const currentTime = state.useRealAudio ? dom.audio.currentTime : demoTime;
+    if (currentTime > 3) {
       playSong(state.currentIndex);
       return;
     }
@@ -392,26 +396,27 @@
     return Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
   }
 
-  function getReliableDuration(song) {
-    // audio.duration can be Infinity or NaN for WAV/large files
-    const d = dom.audio.duration;
-    return (d && isFinite(d) && !isNaN(d)) ? d : song.duration;
+  /** Returns the authoritative duration for the current track.
+   *  For real audio  → state.realDuration (from audio element)
+   *  For demo/placeholder → song.duration (from JSON) */
+  function getActiveDuration() {
+    if (state.useRealAudio && state.realDuration > 0) return state.realDuration;
+    const song = state.filteredSongs[state.currentIndex];
+    return song ? song.duration : 0;
   }
 
   function seekToPercent(pct) {
     if (state.currentIndex === -1) return;
-    const song = state.filteredSongs[state.currentIndex];
-    const duration = getReliableDuration(song);
+    const duration = getActiveDuration();
+    if (duration <= 0) return;
 
     if (state.useRealAudio) {
       dom.audio.currentTime = pct * duration;
     } else {
-      demoTime = pct * song.duration;
+      demoTime = pct * duration;
     }
     dom.progressBar.style.width = `${pct * 100}%`;
-    dom.timeCurrent.textContent = formatTime(
-      state.useRealAudio ? pct * duration : demoTime
-    );
+    dom.timeCurrent.textContent = formatTime(pct * duration);
   }
 
   function handleProgressDragStart(e) {
@@ -571,22 +576,27 @@
     // Audio events (for real audio files)
     dom.audio.addEventListener('timeupdate', () => {
       if (!state.useRealAudio || isDraggingProgress) return;
-      const song = state.filteredSongs[state.currentIndex];
-      if (!song) return;
-      const duration = getReliableDuration(song);
+      const duration = getActiveDuration();
+      if (duration <= 0) return;
       const pct = (dom.audio.currentTime / duration) * 100;
       dom.progressBar.style.width = `${pct}%`;
       dom.timeCurrent.textContent = formatTime(dom.audio.currentTime);
     });
-    dom.audio.addEventListener('loadedmetadata', () => {
+
+    // Update state.realDuration from the audio element
+    const onDurationReady = () => {
       const d = dom.audio.duration;
-      if (d && isFinite(d) && !isNaN(d)) {
+      if (d && isFinite(d) && !isNaN(d) && d > 0) {
+        state.realDuration = d;
         dom.timeTotal.textContent = formatTime(d);
         if (state.useRealAudio) {
           stopDemoProgress();
         }
       }
-    });
+    };
+    dom.audio.addEventListener('loadedmetadata', onDurationReady);
+    // durationchange fires when duration becomes known or changes (covers edge cases)
+    dom.audio.addEventListener('durationchange', onDurationReady);
     dom.audio.addEventListener('ended', handleTrackEnd);
 
     // Keyboard
