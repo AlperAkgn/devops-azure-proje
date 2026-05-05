@@ -69,6 +69,48 @@
     return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
   }
 
+  /** Check if a song has been released yet */
+  function isSongReleased(song) {
+    if (!song.releaseDate) return true;
+    return new Date(song.releaseDate) <= new Date();
+  }
+
+  /** Compute countdown parts from a future date */
+  function getCountdownParts(releaseDate) {
+    const diff = Math.max(0, new Date(releaseDate) - new Date());
+    return {
+      days: Math.floor(diff / 86400000),
+      hours: Math.floor((diff % 86400000) / 3600000),
+      minutes: Math.floor((diff % 3600000) / 60000),
+      seconds: Math.floor((diff % 60000) / 1000),
+    };
+  }
+
+  // -------- Countdown Timer --------
+  let countdownInterval = null;
+
+  function startCountdownTimers() {
+    clearInterval(countdownInterval);
+    countdownInterval = setInterval(() => {
+      const els = document.querySelectorAll('.card-countdown[data-release]');
+      if (els.length === 0) { clearInterval(countdownInterval); return; }
+      els.forEach((el) => {
+        const release = el.dataset.release;
+        if (new Date(release) <= new Date()) {
+          // Song just became available — re-render
+          clearInterval(countdownInterval);
+          renderSongs();
+          return;
+        }
+        const p = getCountdownParts(release);
+        el.querySelector('.cd-days').textContent = String(p.days).padStart(2, '0');
+        el.querySelector('.cd-hours').textContent = String(p.hours).padStart(2, '0');
+        el.querySelector('.cd-minutes').textContent = String(p.minutes).padStart(2, '0');
+        el.querySelector('.cd-seconds').textContent = String(p.seconds).padStart(2, '0');
+      });
+    }, 1000);
+  }
+
   // -------- Fetch Songs --------
   async function loadSongs() {
     try {
@@ -115,37 +157,66 @@
       return;
     }
 
+    let hasCountdown = false;
+
     state.filteredSongs.forEach((song, idx) => {
+      const released = isSongReleased(song);
       const card = document.createElement('div');
       card.className = 'song-card';
       card.dataset.index = idx;
-      if (state.currentIndex === idx && state.isPlaying) card.classList.add('playing');
+      if (released && state.currentIndex === idx && state.isPlaying) card.classList.add('playing');
+      if (!released) card.classList.add('scheduled');
 
       const delay = idx * 0.05;
       card.style.animationDelay = `${delay}s`;
 
-      card.innerHTML = `
-        <div class="card-cover-wrap">
-          <img src="${song.coverUrl}" alt="${song.title}" loading="lazy" 
-               onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%231a1a28%22 width=%22200%22 height=%22200%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%236a6a82%22 font-size=%2240%22>♪</text></svg>'" />
-          <button class="card-play-btn" title="Oynat">
-            <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg>
-          </button>
-        </div>
-        <div class="card-title" title="${song.title}">${song.title}</div>
-        <div class="card-artist" title="${song.artist}">${song.artist}</div>
-        <div class="card-meta">
-          <span class="card-genre">${song.genre}</span>
-          <div class="playing-bars">
-            <span></span><span></span><span></span><span></span>
+      if (released) {
+        // --- Normal released card ---
+        card.innerHTML = `
+          <div class="card-cover-wrap">
+            <img src="${song.coverUrl}" alt="${song.title}" loading="lazy"
+                 onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%231a1a28%22 width=%22200%22 height=%22200%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%236a6a82%22 font-size=%2240%22>♪</text></svg>'" />
+            <button class="card-play-btn" title="Oynat">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="8,5 19,12 8,19"/></svg>
+            </button>
           </div>
-          <span class="card-duration">${formatTime(song.duration)}</span>
-        </div>
-      `;
+          <div class="card-title" title="${song.title}">${song.title}</div>
+          <div class="card-artist" title="${song.artist}">${song.artist}</div>
+          <div class="card-meta">
+            <span class="card-genre">${song.genre}</span>
+            <div class="playing-bars"><span></span><span></span><span></span><span></span></div>
+            <span class="card-duration">${formatTime(song.duration)}</span>
+          </div>
+        `;
+        card.addEventListener('click', () => playSong(idx));
+      } else {
+        // --- Scheduled / unreleased card with countdown ---
+        hasCountdown = true;
+        const p = getCountdownParts(song.releaseDate);
+        card.innerHTML = `
+          <div class="card-cover-wrap">
+            <img src="${song.coverUrl}" alt="${song.title}" loading="lazy"
+                 onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%231a1a28%22 width=%22200%22 height=%22200%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%236a6a82%22 font-size=%2240%22>♪</text></svg>'" />
+            <span class="scheduled-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Yakında
+            </span>
+          </div>
+          <div class="card-title" title="${song.title}">${song.title}</div>
+          <div class="card-artist" title="${song.artist}">${song.artist}</div>
+          <div class="card-countdown" data-release="${song.releaseDate}">
+            <div class="countdown-unit"><span class="countdown-value cd-days">${String(p.days).padStart(2, '0')}</span><span class="countdown-label">Gün</span></div>
+            <div class="countdown-unit"><span class="countdown-value cd-hours">${String(p.hours).padStart(2, '0')}</span><span class="countdown-label">Saat</span></div>
+            <div class="countdown-unit"><span class="countdown-value cd-minutes">${String(p.minutes).padStart(2, '0')}</span><span class="countdown-label">Dk</span></div>
+            <div class="countdown-unit"><span class="countdown-value cd-seconds">${String(p.seconds).padStart(2, '0')}</span><span class="countdown-label">Sn</span></div>
+          </div>
+        `;
+      }
 
-      card.addEventListener('click', () => playSong(idx));
       dom.songsGrid.appendChild(card);
     });
+
+    if (hasCountdown) startCountdownTimers();
 
     highlightCurrentCard();
   }
@@ -176,6 +247,8 @@
   function playSong(filteredIndex) {
     const song = state.filteredSongs[filteredIndex];
     if (!song) return;
+    // Block playback for unreleased songs
+    if (!isSongReleased(song)) return;
 
     state.currentIndex = filteredIndex;
     state.isPlaying = true;

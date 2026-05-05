@@ -6,6 +6,7 @@
     "album": "Amor Supremo",
     "genre": "Latin",
     "duration": 214,
+    "releaseDate": "2025-01-01T00:00:00",
     "coverUrl": "assets/covers/cover1.png",
     "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/Carla%20Morrison%20-%20Disfruto%20(letra)%20%5BjwP1HRmDVII%5D.mp3"
   },
@@ -16,6 +17,7 @@
     "album": "missing",
     "genre": "Ambient",
     "duration": 187,
+    "releaseDate": "2025-06-15T00:00:00",
     "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/2sadecebiralper._a_vast_empty_snowy_clearing_at_night_no_buildin_34c24289-9d72-4b49-8c0c-771c820f9b84.png",
     "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/3tyu%20C%20min%20degisim%20mp3.mp3"
   },
@@ -26,6 +28,7 @@
     "album": "Gece Notları",
     "genre": "Lo-Fi",
     "duration": 243,
+    "releaseDate": "2026-05-20T00:00:00",
     "coverUrl": "assets/covers/cover3.png",
     "audioUrl": "placeholder.mp3"
   },
@@ -36,6 +39,7 @@
     "album": "Dağların Ötesi",
     "genre": "Rock",
     "duration": 276,
+    "releaseDate": "2025-03-10T00:00:00",
     "coverUrl": "assets/covers/cover4.png",
     "audioUrl": "placeholder.mp3"
   },
@@ -46,6 +50,7 @@
     "album": "Gece Kulübü",
     "genre": "Jazz",
     "duration": 312,
+    "releaseDate": "2026-06-01T00:00:00",
     "coverUrl": "assets/covers/cover5.png",
     "audioUrl": "placeholder.mp3"
   },
@@ -56,6 +61,7 @@
     "album": "Doğanın Sesi",
     "genre": "Folk",
     "duration": 198,
+    "releaseDate": "2025-12-01T00:00:00",
     "coverUrl": "assets/covers/cover6.png",
     "audioUrl": "placeholder.mp3"
   },
@@ -66,6 +72,7 @@
     "album": "Işıltı",
     "genre": "R&B",
     "duration": 229,
+    "releaseDate": "2026-07-15T00:00:00",
     "coverUrl": "assets/covers/cover7.png",
     "audioUrl": "placeholder.mp3"
   },
@@ -76,6 +83,7 @@
     "album": "Kozmik Yolculuk",
     "genre": "Ambient",
     "duration": 345,
+    "releaseDate": "2025-09-01T00:00:00",
     "coverUrl": "assets/covers/cover8.png",
     "audioUrl": "placeholder.mp3"
   }

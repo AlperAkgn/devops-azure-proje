@@ -836,6 +836,106 @@ ol {
 }
 
 
+/* ---------- SCHEDULED / COUNTDOWN ---------- */
+.song-card.scheduled {
+  pointer-events: none;
+  position: relative;
+}
+
+.song-card.scheduled .card-cover-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 2;
+  border-radius: inherit;
+}
+
+.song-card.scheduled .card-cover-wrap img {
+  filter: grayscale(0.4) brightness(0.6);
+}
+
+.song-card.scheduled .card-play-btn {
+  display: none !important;
+}
+
+.scheduled-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: rgba(138, 43, 226, 0.75);
+  backdrop-filter: blur(6px);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #f0e6ff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  animation: pulse-badge 2.5s ease-in-out infinite;
+}
+
+.scheduled-badge svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.card-countdown {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 36px;
+  padding: 6px 4px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(138, 43, 226, 0.25);
+}
+
+.countdown-value {
+  font-size: 1rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  background: linear-gradient(135deg, #c084fc, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.countdown-label {
+  font-size: 0.55rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+@keyframes pulse-badge {
+
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 12px rgba(138, 43, 226, 0.5);
+  }
+}
+
 /* ---------- ANIMATIONS ---------- */
 @keyframes fadeInUp {
   from {
