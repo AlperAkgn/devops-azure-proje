@@ -16,7 +16,7 @@
     isPlaying: false,
     isShuffle: false,
     repeatMode: 0, // 0=off, 1=all, 2=one
-    likedSongs: new Set(),
+    likedSongs: new Set(),  // kept for internal state, UI removed
     currentGenre: 'all',
     searchQuery: '',
     realDuration: 0, // populated from audio.duration via loadedmetadata/durationchange
@@ -42,7 +42,6 @@
     btnNext: $('#btn-next'),
     btnShuffle: $('#btn-shuffle'),
     btnRepeat: $('#btn-repeat'),
-    btnLike: $('#btn-like'),
     btnVolume: $('#btn-volume'),
     progressWrap: $('#progress-bar-wrap'),
     progressBar: $('#progress-bar'),
@@ -429,20 +428,7 @@
     }
   }
 
-  function toggleLike() {
-    if (state.currentIndex === -1) return;
-    const song = state.filteredSongs[state.currentIndex];
-    if (state.likedSongs.has(song.id)) {
-      state.likedSongs.delete(song.id);
-      dom.btnLike.classList.remove('liked');
-    } else {
-      state.likedSongs.add(song.id);
-      dom.btnLike.classList.add('liked');
-      // Heart pop animation
-      dom.btnLike.style.transform = 'scale(1.3)';
-      setTimeout(() => (dom.btnLike.style.transform = ''), 200);
-    }
-  }
+  // (Like functionality removed – UI cleaned for artist portfolio)
 
   // -------- UI Updates --------
   function updatePlayButton(playing) {
@@ -614,7 +600,6 @@
     dom.btnPrev.addEventListener('click', playPrev);
     dom.btnShuffle.addEventListener('click', toggleShuffle);
     dom.btnRepeat.addEventListener('click', toggleRepeat);
-    dom.btnLike.addEventListener('click', toggleLike);
     dom.btnVolume.addEventListener('click', toggleMute);
 
     // Progress bar – click + drag support
@@ -677,14 +662,6 @@
     // Keyboard
     document.addEventListener('keydown', handleKeyboard);
 
-    // Nav links
-    $$('.nav-link').forEach((link) => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        $$('.nav-link').forEach((l) => l.classList.remove('active'));
-        link.classList.add('active');
-      });
-    });
   }
 
   // -------- Init --------
