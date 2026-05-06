@@ -174,7 +174,7 @@
           <div class="card-title" title="${song.title}">${song.title}</div>
           <div class="card-artist" title="${song.artist}">${song.artist}</div>
           <div class="card-meta">
-            <span class="card-genre">${song.genre}</span>
+            <span class="card-genre">${Array.isArray(song.genre) ? song.genre.join(', ') : song.genre}</span>
             <div class="playing-bars"><span></span><span></span><span></span><span></span></div>
             <span class="card-duration" data-song-id="${song.id}">—:——</span>
           </div>
