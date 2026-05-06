@@ -1,90 +1,112 @@
 [
   {
     "id": 1,
-    "title": "Disfruto",
-    "artist": "Carla Morrison",
-    "album": "Amor Supremo",
+    "title": "Desolated",
+    "artist": "Cherry",
+    "album": "Desolated",
     "genre": "Latin",
     "duration": 214,
-    "releaseDate": "2025-01-01T00:00:00",
-    "coverUrl": "assets/covers/cover1.png",
-    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/Carla%20Morrison%20-%20Disfruto%20(letra)%20%5BjwP1HRmDVII%5D.mp3"
+    "releaseDate": "2025-07-18T00:00:00",
+    "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/Desolated%20Coverart.png",
+    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/2025-07-18_Desolated.mp3"
   },
   {
     "id": 2,
-    "title": "missing",
+    "title": "Vanishing Dreams",
     "artist": "Cherry",
-    "album": "missing",
+    "album": "Vanishing Dreams",
     "genre": "Ambient",
     "duration": 187,
-    "releaseDate": "2025-06-15T00:00:00",
-    "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/2sadecebiralper._a_vast_empty_snowy_clearing_at_night_no_buildin_34c24289-9d72-4b49-8c0c-771c820f9b84.png",
-    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/3tyu%20C%20min%20degisim%20mp3.mp3"
+    "releaseDate": "2025-08-08T00:00:00",
+    "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/Vanishing%20Dreams%20Coverart.png",
+    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/2025-08-08_Vanishing_Dreams.mp3"
   },
   {
     "id": 3,
-    "title": "Yağmurlu Gece",
-    "artist": "Lo-Fi Collective",
-    "album": "Gece Notları",
+    "title": "Goddess",
+    "artist": "Cherry",
+    "album": "Goddess",
     "genre": "Lo-Fi",
     "duration": 243,
-    "releaseDate": "2026-05-20T00:00:00",
-    "coverUrl": "assets/covers/cover3.png",
-    "audioUrl": "placeholder.mp3"
+    "releaseDate": "2025-09-05T00:00:00",
+    "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/Goddess%20Coverart.png",
+    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/2025-09-05_Goddess.mp3"
   },
   {
     "id": 4,
-    "title": "Zirve",
-    "artist": "Kaya Sesi",
-    "album": "Dağların Ötesi",
+    "title": "Requiem",
+    "artist": "Cherry",
+    "album": "Requiem",
     "genre": "Rock",
     "duration": 276,
-    "releaseDate": "2025-03-10T00:00:00",
-    "coverUrl": "assets/covers/cover4.png",
-    "audioUrl": "placeholder.mp3"
+    "releaseDate": "2025-09-12T00:00:00",
+    "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/Requiem%20Cover%20Art.png",
+    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/2025-09-12_Requiem.mp3"
   },
   {
     "id": 5,
-    "title": "Altın Saat",
-    "artist": "Caz Trio",
-    "album": "Gece Kulübü",
+    "title": "Whispering",
+    "artist": "Cherry",
+    "album": "Whispering",
     "genre": "Jazz",
     "duration": 312,
-    "releaseDate": "2026-06-01T00:00:00",
-    "coverUrl": "assets/covers/cover5.png",
-    "audioUrl": "placeholder.mp3"
+    "releaseDate": "2025-10-03T00:00:00",
+    "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/Whispering%20Cover%20Art.png",
+    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/2025-10-03_Whispering.mp3"
   },
   {
     "id": 6,
-    "title": "Orman Yolu",
-    "artist": "Akustik Rüzgar",
-    "album": "Doğanın Sesi",
+    "title": "My Love",
+    "artist": "Cherry",
+    "album": "My Love",
     "genre": "Folk",
     "duration": 198,
-    "releaseDate": "2025-12-01T00:00:00",
-    "coverUrl": "assets/covers/cover6.png",
-    "audioUrl": "placeholder.mp3"
+    "releaseDate": "2025-10-17T00:00:00",
+    "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/My%20Love%20Cover%20Art.png",
+    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/2025-10-17_My_Love.mp3"
   },
   {
     "id": 7,
-    "title": "Kadife Gece",
-    "artist": "Selin Demir",
-    "album": "Işıltı",
+    "title": "blurry eyes",
+    "artist": "Cherry",
+    "album": "blurry eyes",
     "genre": "R&B",
     "duration": 229,
-    "releaseDate": "2026-07-15T00:00:00",
-    "coverUrl": "assets/covers/cover7.png",
-    "audioUrl": "placeholder.mp3"
+    "releaseDate": "2025-11-14T00:00:00",
+    "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/blurry%20eyes%20cover%20art.png",
+    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/2025-11-14_blurry_eyes.mp3"
   },
   {
     "id": 8,
-    "title": "Yıldız Tozu",
-    "artist": "Aurora Ensemble",
-    "album": "Kozmik Yolculuk",
+    "title": "REVIVE",
+    "artist": "Cherry",
+    "album": "REVIVE",
     "genre": "Ambient",
     "duration": 345,
-    "releaseDate": "2025-09-01T00:00:00",
-    "coverUrl": "assets/covers/cover8.png",
-    "audioUrl": "placeholder.mp3"
+    "releaseDate": "2026-02-06T00:00:00",
+    "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/REVIVE%20Coverart.png",
+    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/2026-02-06_REVIVE.mp3"
+  },
+  {
+    "id": 9,
+    "title": "A World We Chose",
+    "artist": "Cherry",
+    "album": "A World We Chose",
+    "genre": "Ambient",
+    "duration": 345,
+    "releaseDate": "2026-03-20T00:00:00",
+    "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/a%20world%20we%20chose%20coverart.png",
+    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/2026-03-20_A_World_We_Chose.mp3"
+  },
+  {
+    "id": 10,
+    "title": "healing with you",
+    "artist": "Cherry",
+    "album": "healing with you",
+    "genre": "Ambient",
+    "duration": 345,
+    "releaseDate": "2026-04-17T00:00:00",
+    "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/healing%20with%20you.png",
+    "audioUrl": "https://devopsprojestorage.blob.core.windows.net/songs/2026-04-17_healing_with_you.mp3"
   }
 ]
