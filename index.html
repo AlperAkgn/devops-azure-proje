@@ -20,6 +20,10 @@
   <div class="cursor-dot" id="cursor-dot"></div>
   <div class="cursor-glow" id="cursor-glow"></div>
 
+  <!-- Particle Network Background -->
+  <canvas id="particle-canvas-blur"></canvas>
+  <canvas id="particle-canvas-sharp"></canvas>
+
   <!-- ===== HEADER / NAVBAR ===== -->
   <header id="app-header">
     <div class="header-inner">
@@ -71,7 +75,13 @@
     <section class="filter-section" id="filter-section">
       <div class="filter-chips">
         <button class="chip active" data-genre="all">Tümü</button>
-        <!-- Chips will be populated dynamically -->
+        <button class="chip" data-genre="Angelcore">Angelcore</button>
+        <button class="chip" data-genre="Ambient">Ambient</button>
+        <button class="chip" data-genre="Synthwave">Synthwave</button>
+        <button class="chip" data-genre="Knightcore">Knightcore</button>
+        <button class="chip" data-genre="EDM">EDM</button>
+        <button class="chip" data-genre="Trap">Trap</button>
+        <button class="chip" data-genre="Phonk">Phonk</button>
       </div>
     </section>
 
@@ -202,6 +212,7 @@
 
   <script src="script.js"></script>
   <script src="cursor.js"></script>
+  <script src="particles.js"></script>
 </body>
 
 </html>

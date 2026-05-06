@@ -134,16 +134,8 @@
 
   // -------- Build Genre Filters --------
   function buildGenreFilters() {
-    const genres = [...new Set(state.songs.map((s) => s.genre))];
-    const container = dom.filterChips;
-    // Keep the "Tümü" chip, add the rest
-    genres.forEach((g) => {
-      const btn = document.createElement('button');
-      btn.className = 'chip';
-      btn.dataset.genre = g;
-      btn.textContent = g;
-      container.appendChild(btn);
-    });
+    // Genre chips are now hardcoded in index.html
+    // Filtering logic is handled by the click listener in bindEvents()
   }
 
   // -------- Render Songs --------
@@ -452,6 +444,12 @@
   function updatePlayButton(playing) {
     dom.iconPlay.style.display = playing ? 'none' : 'block';
     dom.iconPause.style.display = playing ? 'block' : 'none';
+
+    // Player glow aura
+    const playerBar = document.getElementById('player-bar');
+    if (playerBar) {
+      playerBar.classList.toggle('player-glowing', playing);
+    }
   }
 
   function highlightCurrentCard() {
