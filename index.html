@@ -16,6 +16,10 @@
 
 <body>
 
+  <!-- Cursor Follower -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-glow" id="cursor-glow"></div>
+
   <!-- ===== HEADER / NAVBAR ===== -->
   <header id="app-header">
     <div class="header-inner">
@@ -63,13 +67,6 @@
 
   <!-- ===== MAIN CONTENT ===== -->
   <main id="main-content">
-    <!-- Hero Section -->
-    <section class="hero-section" id="hero-section">
-      <div class="hero-bg"></div>
-      <div class="hero-content">
-      </div>
-    </section>
-
     <!-- Genre Filter -->
     <section class="filter-section" id="filter-section">
       <div class="filter-chips">
@@ -204,6 +201,7 @@
   <audio id="audio-player" preload="metadata"></audio>
 
   <script src="script.js"></script>
+  <script src="cursor.js"></script>
 </body>
 
 </html>

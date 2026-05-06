@@ -127,7 +127,7 @@
           <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
         <p style="color:var(--text-tertiary)">Şarkılar yüklenirken hata oluştu</p>
-        <button onclick="location.reload()" style="margin-top:8px;padding:8px 20px;border-radius:100px;background:var(--accent);color:#000;font-weight:600;font-size:0.85rem;cursor:pointer;border:none">Tekrar Dene</button>
+        <button onclick="location.reload()" style="margin-top:8px;padding:8px 20px;border-radius:100px;background:var(--text-primary);color:var(--bg-primary);font-weight:600;font-size:0.85rem;cursor:pointer;border:none">Tekrar Dene</button>
       `;
     }
   }
