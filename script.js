@@ -176,7 +176,7 @@
           <div class="card-meta">
             <span class="card-genre">${song.genre}</span>
             <div class="playing-bars"><span></span><span></span><span></span><span></span></div>
-            <span class="card-duration">${formatTime(song.duration)}</span>
+            <span class="card-duration" data-song-id="${song.id}">—:——</span>
           </div>
         `;
         card.addEventListener('click', () => playSong(idx));
@@ -208,8 +208,45 @@
     });
 
     if (hasCountdown) startCountdownTimers();
+    fetchRealDurations();
 
     highlightCurrentCard();
+  }
+
+  // -------- Fetch Real Durations from Audio Metadata --------
+  function fetchRealDurations() {
+    state.filteredSongs.forEach((song) => {
+      if (!isSongReleased(song)) return;
+      const el = dom.songsGrid.querySelector(`.card-duration[data-song-id="${song.id}"]`);
+      if (!el) return;
+
+      const tmpAudio = new Audio();
+      tmpAudio.preload = 'metadata';
+
+      const onMeta = () => {
+        const d = tmpAudio.duration;
+        if (d && isFinite(d) && d > 0) {
+          el.textContent = formatTime(d);
+        }
+        cleanup();
+      };
+
+      const onErr = () => {
+        // Fallback to JSON duration if audio metadata can't load
+        el.textContent = formatTime(song.duration);
+        cleanup();
+      };
+
+      const cleanup = () => {
+        tmpAudio.removeEventListener('loadedmetadata', onMeta);
+        tmpAudio.removeEventListener('error', onErr);
+        tmpAudio.src = '';
+      };
+
+      tmpAudio.addEventListener('loadedmetadata', onMeta);
+      tmpAudio.addEventListener('error', onErr);
+      tmpAudio.src = song.audioUrl;
+    });
   }
 
   // -------- Filter & Search --------
