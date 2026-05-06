@@ -218,7 +218,11 @@
     let songs = [...state.songs];
 
     if (state.currentGenre !== 'all') {
-      songs = songs.filter((s) => s.genre === state.currentGenre);
+      songs = songs.filter((s) =>
+        Array.isArray(s.genre)
+          ? s.genre.includes(state.currentGenre)
+          : s.genre === state.currentGenre
+      );
     }
 
     if (state.searchQuery) {

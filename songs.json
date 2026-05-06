@@ -4,7 +4,10 @@
     "title": "Desolated",
     "artist": "Cherry",
     "album": "Desolated",
-    "genre": "Latin",
+    "genre": [
+      "Ambient",
+      "Phonk"
+    ],
     "duration": 214,
     "releaseDate": "2025-07-18T00:00:00",
     "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/Desolated%20Coverart.png",
@@ -15,7 +18,10 @@
     "title": "Vanishing Dreams",
     "artist": "Cherry",
     "album": "Vanishing Dreams",
-    "genre": "Ambient",
+    "genre": [
+      "Ambient",
+      "Phonk"
+    ],
     "duration": 187,
     "releaseDate": "2025-08-08T00:00:00",
     "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/Vanishing%20Dreams%20Coverart.png",
@@ -26,7 +32,10 @@
     "title": "Goddess",
     "artist": "Cherry",
     "album": "Goddess",
-    "genre": "Lo-Fi",
+    "genre": [
+      "Ambient",
+      "Phonk"
+    ],
     "duration": 243,
     "releaseDate": "2025-09-05T00:00:00",
     "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/Goddess%20Coverart.png",
@@ -37,7 +46,10 @@
     "title": "Requiem",
     "artist": "Cherry",
     "album": "Requiem",
-    "genre": "Rock",
+    "genre": [
+      "Ambient",
+      "Phonk"
+    ],
     "duration": 276,
     "releaseDate": "2025-09-12T00:00:00",
     "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/Requiem%20Cover%20Art.png",
@@ -48,7 +60,10 @@
     "title": "Whispering",
     "artist": "Cherry",
     "album": "Whispering",
-    "genre": "Jazz",
+    "genre": [
+      "Ambient",
+      "Phonk"
+    ],
     "duration": 312,
     "releaseDate": "2025-10-03T00:00:00",
     "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/Whispering%20Cover%20Art.png",
@@ -59,7 +74,10 @@
     "title": "My Love",
     "artist": "Cherry",
     "album": "My Love",
-    "genre": "Folk",
+    "genre": [
+      "Ambient",
+      "Phonk"
+    ],
     "duration": 198,
     "releaseDate": "2025-10-17T00:00:00",
     "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/My%20Love%20Cover%20Art.png",
@@ -70,7 +88,10 @@
     "title": "blurry eyes",
     "artist": "Cherry",
     "album": "blurry eyes",
-    "genre": "R&B",
+    "genre": [
+      "Ambient",
+      "Phonk"
+    ],
     "duration": 229,
     "releaseDate": "2025-11-14T00:00:00",
     "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/blurry%20eyes%20cover%20art.png",
@@ -81,7 +102,10 @@
     "title": "REVIVE",
     "artist": "Cherry",
     "album": "REVIVE",
-    "genre": "Ambient",
+    "genre": [
+      "Ambient",
+      "Phonk"
+    ],
     "duration": 345,
     "releaseDate": "2026-02-06T00:00:00",
     "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/REVIVE%20Coverart.png",
@@ -92,7 +116,10 @@
     "title": "A World We Chose",
     "artist": "Cherry",
     "album": "A World We Chose",
-    "genre": "Ambient",
+    "genre": [
+      "Ambient",
+      "Phonk"
+    ],
     "duration": 345,
     "releaseDate": "2026-03-20T00:00:00",
     "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/a%20world%20we%20chose%20coverart.png",
@@ -103,7 +130,10 @@
     "title": "healing with you",
     "artist": "Cherry",
     "album": "healing with you",
-    "genre": "Ambient",
+    "genre": [
+      "Ambient",
+      "Phonk"
+    ],
     "duration": 345,
     "releaseDate": "2026-04-17T00:00:00",
     "coverUrl": "https://devopsprojestorage.blob.core.windows.net/coverarts/healing%20with%20you.png",
